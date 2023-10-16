@@ -1,0 +1,106 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class TreeNode 
+{
+public:
+    int key;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int data) 
+    {
+        key = data;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+TreeNode *insert(TreeNode *root, int key) 
+{
+    if (root == nullptr) {
+        return new TreeNode(key);
+    }
+    if (key < root->key) {
+        root->left = insert(root->left, key);
+    } else {
+        root->right = insert(root->right, key);
+    }
+    return root;
+}
+
+TreeNode *buildBSTFromSequence(vector<int> &sequence) {
+    TreeNode *root = nullptr;
+    for (int num : sequence) {
+        root = insert(root, num);
+    }
+    return root;
+}
+
+void preOrderTraversal(TreeNode *root) {
+    if (root != nullptr) {
+        cout << root->key;
+        if (root->left != nullptr || root->right != nullptr) 
+        {
+            cout << " ";
+        }
+        preOrderTraversal(root->left);
+        preOrderTraversal(root->right);
+    }
+}
+
+void inOrderTraversal(TreeNode *root) {
+    if (root != nullptr) 
+    {
+        inOrderTraversal(root->left);
+        cout << root->key;
+        if (root->left != nullptr || root->right != nullptr) 
+        {
+            cout << " ";
+        }
+        inOrderTraversal(root->right);
+    }
+}
+
+void postOrderTraversal(TreeNode *root) {
+    if (root != nullptr) {
+        postOrderTraversal(root->left);
+        postOrderTraversal(root->right);
+        cout << root->key;
+        if (root->left != nullptr || root->right != nullptr) 
+        {
+            cout << " ";
+        }
+    }
+}
+
+int main() {
+    int C;
+    cin >> C;
+
+    for (int caseNumber = 1; caseNumber <= C; ++caseNumber) {
+        int N;
+        cin >> N;
+        vector<int> numbers(N);
+        for (int i = 0; i < N; ++i) {
+            cin >> numbers[i];
+        }
+
+        TreeNode *root = buildBSTFromSequence(numbers);
+        cout << "Case " << caseNumber << ":" << endl;
+        cout << "Pre.: ";
+        preOrderTraversal(root);
+        cout << endl;
+        cout << "In..: ";
+        inOrderTraversal(root);
+        cout << endl;
+        cout << "Post: ";
+        postOrderTraversal(root);
+        cout << endl;
+        if (caseNumber < C) {
+            cout << endl; }
+    }
+    return 0;
+}
