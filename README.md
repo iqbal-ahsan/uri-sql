@@ -1,3 +1,3 @@
 # uri
-where i learn problem solving with real life problem.
-peace
+Where I learn problem-solving with real-life problems.\n
+Peace
